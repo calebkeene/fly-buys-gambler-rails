@@ -1,24 +1,12 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Simulation of fly-buys API for validating card numbers, getting/updating member balances, and custom member authentication.
 
-Things you may want to cover:
+## Endpoints
 
-* Ruby version
+All requests must include the `private_api_key` parameter, and an additional parameter `card_number_or_email`, which is either the fly buys card number, or the email of a member. When calling the `login` endpoint, `password` must also be supplied.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- POST `/api/v1/login`
+- GET `/api/v1/validate`
+- GET `/api/v1/get_balance`
+- PUT `/api/v1/update_balance`
