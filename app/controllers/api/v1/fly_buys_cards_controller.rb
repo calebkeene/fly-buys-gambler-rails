@@ -6,7 +6,7 @@ class Api::V1::FlyBuysCardsController < ApplicationController
   before_action :set_fly_buys_card, except: :validate
 
   def validate
-    response_type =  params[:fly_buys_card_number] =~ FlyBuysCard::VALID_FORMAT ? "valid" : "invalid"
+    response_type =  params[:card_number] =~ FlyBuysCard::VALID_FORMAT ? "valid" : "invalid"
     json_response({ message: I18n.t("fly_buys_card.format.#{response_type}") })
   end
 

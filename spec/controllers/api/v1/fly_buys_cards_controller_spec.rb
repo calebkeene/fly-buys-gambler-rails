@@ -207,7 +207,7 @@ RSpec.describe Api::V1::FlyBuysCardsController, type: :request do
           let(:request_params) do
             {
               private_api_key: private_api_key.value,
-              fly_buys_card_number: context_type === "valid" ? fly_buys_card.number : "1234-123-12-1"
+              card_number: context_type === "valid" ? fly_buys_card.number : "1234-123-12-1"
             }
           end
 

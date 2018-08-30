@@ -1,5 +1,6 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |file| require file } # load any helper modules I add
@@ -7,6 +8,13 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |file| require file } # load
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
+
+if ENV["COVERAGE"]
+  require 'simplecov'
+  SimpleCov.start "rails" do
+    add_filter "app/controllers/concerns/response.rb" # all this does is return json
+  end
+end
 
 begin
   ActiveRecord::Migration.maintain_test_schema!

@@ -13,13 +13,16 @@ gem 'bcrypt-ruby', require: 'bcrypt'
 # gem 'rack-cors'
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.5'
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'pry'
   gem 'factory_bot_rails', '~> 4.0'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'faker'
   gem 'database_cleaner'
+end
+
+group :test do
+  gem 'rspec-rails', '~> 3.5'
+  gem 'simplecov', require: false
 end
 
 group :development do
