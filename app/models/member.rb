@@ -1,7 +1,7 @@
 class Member < ApplicationRecord
   before_save :encrypt_password
   after_save :clear_unencrypted_password
-  has_one :fly_buys_card
+  has_one :fly_buys_card, dependent: :destroy
 
   VALID_EMAIL_FORMAT = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i.freeze
 

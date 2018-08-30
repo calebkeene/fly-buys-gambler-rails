@@ -23,7 +23,7 @@ RSpec.describe Api::V1::FlyBuysCardsController, type: :request do
   end
 
   let(:nonexistant_card_number_or_email) do
-    ["1111-1111-2222-2222", Faker::Internet.email].sample
+    ["6014-1111-2222-2222", Faker::Internet.email].sample
   end
 
   describe "GET validate" do
