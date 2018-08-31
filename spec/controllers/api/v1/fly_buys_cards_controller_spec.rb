@@ -23,7 +23,7 @@ RSpec.describe Api::V1::FlyBuysCardsController, type: :request do
   end
 
   let(:nonexistant_card_number_or_email) do
-    ["6014-1111-2222-2222", Faker::Internet.email].sample
+    ["6014-1111-2222-3333", Faker::Internet.email].sample
   end
 
   describe "GET validate" do
@@ -38,13 +38,12 @@ RSpec.describe Api::V1::FlyBuysCardsController, type: :request do
       end
 
       context "correct private API key" do
+        let(:parent_request_params) do
+          { private_api_key: private_api_key.value }
+        end
+
         context "valid card number or email" do
-          let(:request_params) do
-            {
-              private_api_key: private_api_key.value,
-              card_number_or_email: valid_card_number_or_email
-            }
-          end
+          let(:request_params) { parent_request_params.merge(card_number_or_email: valid_card_number_or_email) }
 
           it "is 200 OK" do
             expect(response.status).to eq(200)
@@ -56,12 +55,7 @@ RSpec.describe Api::V1::FlyBuysCardsController, type: :request do
         end
 
         context "invalid card number or email" do
-          let(:request_params) do
-            {
-              private_api_key: private_api_key.value,
-              card__number_or_email: invalid_card_number_or_email
-            }
-          end
+          let(:request_params) { parent_request_params.merge(card_number_or_email: invalid_card_number_or_email) }
 
           it "is 422 unprocessable entity" do
             expect(response.status).to eq(422)
@@ -77,12 +71,7 @@ RSpec.describe Api::V1::FlyBuysCardsController, type: :request do
         end
 
         context "non-existant card number or email" do
-          let(:request_params) do
-            {
-              private_api_key: private_api_key.value,
-              card_number_or_email: nonexistant_card_number_or_email
-            }
-          end
+          let(:request_params) { parent_request_params.merge(card_number_or_email: nonexistant_card_number_or_email) }
 
           it "is 404 not found" do
             expect(response.status).to eq(404)
@@ -142,18 +131,18 @@ RSpec.describe Api::V1::FlyBuysCardsController, type: :request do
   describe "PUT update_balance" do
     let(:number_points) { Faker::Number.number(2) }
 
+    let(:request_params) do
+      {
+        private_api_key: private_api_key.value,
+        card_number_or_email: valid_card_number_or_email,
+        number_points: number_points
+      }
+    end
+
     context "member logged in " do
       before do
         post(api_v1_member_login_path, params: request_params.merge(password: member_password))
         put(api_v1_card_update_balance_path, params: request_params)
-      end
-
-      let(:request_params) do
-        {
-          private_api_key: private_api_key.value,
-          number_points: number_points,
-          card_number_or_email: valid_card_number_or_email
-        }
       end
 
       let!(:new_balance) { fly_buys_card.balance + number_points.to_i }
@@ -174,14 +163,6 @@ RSpec.describe Api::V1::FlyBuysCardsController, type: :request do
     context "member not logged in / Session expired" do
       before do
         put(api_v1_card_update_balance_path, params: request_params)
-      end
-
-      let(:request_params) do
-        {
-          private_api_key: private_api_key.value,
-          card_number_or_email: valid_card_number_or_email,
-          number_points: number_points
-        }
       end
 
       it "is 401 unauthorized" do

@@ -31,13 +31,16 @@ RSpec.describe Api::V1::MembersController, type: :request do
 
     context "correct private API key used" do
       context "valid_card_number_or_email" do
+        let(:parent_request_params) do
+          {
+            private_api_key: private_api_key.value,
+            card_number_or_email: valid_card_number_or_email,
+          }
+        end
+
         context "correct password" do
           let(:request_params) do
-            {
-              private_api_key: private_api_key.value,
-              card_number_or_email: valid_card_number_or_email,
-              password: member_password
-            }
+            parent_request_params.merge(password: member_password)
           end
 
           context "member not already logged in" do
@@ -74,11 +77,7 @@ RSpec.describe Api::V1::MembersController, type: :request do
 
         context "incorrect password" do
           let(:request_params) do
-            {
-              private_api_key: private_api_key.value,
-              card_number_or_email: valid_card_number_or_email,
-              password: Faker::Crypto.md5 # random hash
-            }
+            parent_request_params.merge(password: Faker::Crypto.md5)
           end
 
           it "is 401 unauthorized" do
@@ -101,6 +100,7 @@ RSpec.describe Api::V1::MembersController, type: :request do
       let(:request_params) do
         { private_api_key: "1111-2222-3333-4444", password: member_password }
       end
+
       before { post(api_v1_member_login_path, params: request_params) }
 
       it "is 401 unauthorized" do
@@ -122,6 +122,7 @@ RSpec.describe Api::V1::MembersController, type: :request do
     let(:parent_request_params) do
       { private_api_key: private_api_key.value }
     end
+
     before { get(api_v1_member_exists_path, params: request_params) }
 
     context "member exists (can be found with card_number or email)" do
