@@ -9,10 +9,6 @@ module ExceptionHandler
       json_response({ message: error.message }, :not_found)
     end
 
-    rescue_from ActiveRecord::RecordInvalid do |error|
-      respond_with_unprocessable_entity(error)
-    end
-
     rescue_from MalformattedRequestError do |error|
       respond_with_unprocessable_entity(error)
     end

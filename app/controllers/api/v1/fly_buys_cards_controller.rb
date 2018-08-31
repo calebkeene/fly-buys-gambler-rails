@@ -29,7 +29,7 @@ class Api::V1::FlyBuysCardsController < ApplicationController
   def set_member
     @member = find_member
     # member needs to be authed at this point - email cookie set
-    if member&.email != cookies["signed_in_member_email"]
+    if member&.email != cookies.signed["logged_in_member_email"]
       raise UnauthorisedError, I18n.t("member.unauthorised.session_expired")
     end
   end

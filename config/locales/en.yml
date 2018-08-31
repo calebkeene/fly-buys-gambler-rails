@@ -4,11 +4,14 @@ en:
   member:
     unauthorised:
       session_expired: "Session expired"
-    sign_in:
+    login:
       success: "Member signed in successfully"
       incorrect_password: "Error: incorrect password"
-    email_or_card_does_not_exist: "Cannot find member corresponding to this email or card number"
-    incorrect_email_or_card_number: "You have not entered a valid email or fly buys card number"
+      already_logged_in: "Member already signed in"
+    card_or_email:
+      exists: "Found member corresponding to this card number or email"
+      does_not_exist: "Cannot find member corresponding to this card number or email"
+      incorrect: "You have not entered a valid email or fly buys card number"
   fly_buys_card:
     format:
       valid: "Format is valid"

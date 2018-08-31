@@ -3,7 +3,7 @@ class ApplicationController < ActionController::API
   include ExceptionHandler
 
   def find_member
-    raise MalformattedRequestError, I18n.t("member.incorrect_email_or_card_number") if invalid_card_number_or_email?
+    raise MalformattedRequestError, I18n.t("member.card_or_email.incorrect") if invalid_card_number_or_email?
 
     member = if finding_by_card_number?
       Member.joins(:fly_buys_card).where("fly_buys_cards.number = (?)", params[:card_number_or_email]).first
@@ -11,7 +11,7 @@ class ApplicationController < ActionController::API
       Member.find_by(email: params[:card_number_or_email])
     end
 
-    raise ActiveRecord::RecordNotFound, I18n.t("member.email_or_card_does_not_exist") unless member
+    raise ActiveRecord::RecordNotFound, I18n.t("member.card_or_email.does_not_exist") unless member
     member
   end
 

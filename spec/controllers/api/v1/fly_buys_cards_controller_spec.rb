@@ -68,7 +68,7 @@ RSpec.describe Api::V1::FlyBuysCardsController, type: :request do
           end
 
           it "includes the correct error message in the response json" do
-            expect(json[:message]).to eq(I18n.t("member.incorrect_email_or_card_number"))
+            expect(json[:message]).to eq(I18n.t("member.card_or_email.incorrect"))
           end
 
           it "does not return any card balance" do
@@ -89,7 +89,7 @@ RSpec.describe Api::V1::FlyBuysCardsController, type: :request do
           end
 
           it "includes the correct error message in the response json" do
-            expect(json[:message]).to eq(I18n.t("member.email_or_card_does_not_exist"))
+            expect(json[:message]).to eq(I18n.t("member.card_or_email.does_not_exist"))
           end
 
           it "does not return any card balance" do
@@ -151,8 +151,8 @@ RSpec.describe Api::V1::FlyBuysCardsController, type: :request do
       let(:request_params) do
         {
           private_api_key: private_api_key.value,
-          card_number_or_email: valid_card_number_or_email,
-          number_points: number_points
+          number_points: number_points,
+          card_number_or_email: valid_card_number_or_email
         }
       end
 

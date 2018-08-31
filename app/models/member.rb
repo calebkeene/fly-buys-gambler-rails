@@ -19,7 +19,7 @@ class Member < ApplicationRecord
 
   def encrypt_password
     return unless password.present?
-    self.encrypted_password = my_password = BCrypt::Password.create(password)
+    self.encrypted_password = BCrypt::Password.create(password)
   end
 
   def clear_unencrypted_password
