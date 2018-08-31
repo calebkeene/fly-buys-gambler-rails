@@ -27,7 +27,7 @@ RSpec.describe Api::V1::MembersController, type: :request do
   end
 
   describe "POST login" do
-    before { post(api_v1_login_path, params: request_params) }
+    before { post(api_v1_member_login_path, params: request_params) }
 
     context "correct private API key used" do
       context "valid_card_number_or_email" do
@@ -83,7 +83,7 @@ RSpec.describe Api::V1::MembersController, type: :request do
       let(:request_params) do
         { private_api_key: "1111-2222-3333-4444", password: member_password }
       end
-      before { post(api_v1_login_path, params: request_params) }
+      before { post(api_v1_member_login_path, params: request_params) }
 
       it "is 401 unauthorized" do
         expect(response.status).to eq(401)

@@ -33,8 +33,8 @@ RSpec.describe Api::V1::FlyBuysCardsController, type: :request do
   describe "GET get_balance" do
     context "member logged in" do
       before do
-        post(api_v1_login_path, params: request_params.merge(password: member_password))
-        get(api_v1_get_balance_path, params: request_params)
+        post(api_v1_member_login_path, params: request_params.merge(password: member_password))
+        get(api_v1_card_get_balance_path, params: request_params)
       end
 
       context "correct private API key" do
@@ -119,7 +119,7 @@ RSpec.describe Api::V1::FlyBuysCardsController, type: :request do
 
     context "member not logged in / Session expired" do
       before do
-        get(api_v1_get_balance_path, params: request_params)
+        get(api_v1_card_get_balance_path, params: request_params)
       end
 
       let(:request_params) do
@@ -144,8 +144,8 @@ RSpec.describe Api::V1::FlyBuysCardsController, type: :request do
 
     context "member logged in " do
       before do
-        post(api_v1_login_path, params: request_params.merge(password: member_password))
-        put(api_v1_update_balance_path, params: request_params)
+        post(api_v1_member_login_path, params: request_params.merge(password: member_password))
+        put(api_v1_card_update_balance_path, params: request_params)
       end
 
       let(:request_params) do
@@ -173,7 +173,7 @@ RSpec.describe Api::V1::FlyBuysCardsController, type: :request do
 
     context "member not logged in / Session expired" do
       before do
-        put(api_v1_update_balance_path, params: request_params)
+        put(api_v1_card_update_balance_path, params: request_params)
       end
 
       let(:request_params) do
@@ -197,8 +197,8 @@ RSpec.describe Api::V1::FlyBuysCardsController, type: :request do
   describe "GET validate" do
     context "member logged in" do
       before do
-        post(api_v1_login_path, params: request_params.merge(password: member_password))
-        get(api_v1_validate_path, params: request_params)
+        post(api_v1_member_login_path, params: request_params.merge(password: member_password))
+        get(api_v1_card_validate_path, params: request_params)
       end
 
       # DRY up this example a bit
