@@ -17,7 +17,7 @@ All requests must include the `private_api_key` parameter, and an additional par
 
 ```bash
   bundle
-  bundle exec rake db:{create, migrate, seed}
+  bundle exec rake db:{create,migrate,seed}
   bundle exec rails s -p 5000
 ```
 
