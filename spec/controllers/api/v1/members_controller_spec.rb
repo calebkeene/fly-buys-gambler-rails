@@ -52,6 +52,18 @@ RSpec.describe Api::V1::MembersController, type: :request do
               expect(json[:message]).to eq(I18n.t("member.login.success"))
             end
 
+            it "includes the member email in the response json" do
+              expect(json[:email]).to eq(member.email)
+            end
+
+            it "includes the member name in the response json" do
+              expect(json[:name]).to eq(member.name)
+            end
+
+            it "returns the current fly_buys_card balance of the member" do
+              expect(json[:fly_buys_balance]).to eq(member.fly_buys_card.balance)
+            end
+
             it "sets the user login cookie in the response" do
               expect(response.cookies.keys).to include("logged_in_member_email")
               expect(response.cookies["logged_in_member_email"]).not_to be_nil
@@ -118,12 +130,12 @@ RSpec.describe Api::V1::MembersController, type: :request do
     end
   end
 
-  describe "GET /member/exists" do
+  describe "GET /member/find" do
     let(:parent_request_params) do
       { private_api_key: private_api_key.value }
     end
 
-    before { get(api_v1_member_exists_path, params: request_params) }
+    before { get(api_v1_member_find_path, params: request_params) }
 
     context "member exists (can be found with card_number or email)" do
       let(:request_params) do

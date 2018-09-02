@@ -1,6 +1,4 @@
 class Api::V1::FlyBuysCardsController < ApplicationController
-  include ActionController::Cookies
-
   before_action :validate_private_api_key
   before_action :set_member, except: :validate
   before_action :set_fly_buys_card, except: :validate
@@ -15,9 +13,9 @@ class Api::V1::FlyBuysCardsController < ApplicationController
   end
 
   def update_balance
-    raise MalformattedRequestError, I18n.t("fly_buys_card.balance.update") unless params[:number_points].present?
+    raise MalformattedRequestError, I18n.t("fly_buys_card.balance.update") unless params[:updated_balance].present?
 
-    fly_buys_card.balance = fly_buys_card.balance + params[:number_points].to_i
+    fly_buys_card.balance = params[:updated_balance].to_i
     fly_buys_card.save!
     respond_with_balance
   end
@@ -29,7 +27,8 @@ class Api::V1::FlyBuysCardsController < ApplicationController
   def set_member
     @member = find_member
     # member needs to be authed at this point - email cookie set
-    if member&.email != cookies.signed["logged_in_member_email"]
+    if member&.email != cookies.signed[:logged_in_member_email]
+      #return # TODO: make sure cookie is sent from client
       raise UnauthorisedError, I18n.t("member.unauthorised.session_expired")
     end
   end

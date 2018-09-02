@@ -129,13 +129,13 @@ RSpec.describe Api::V1::FlyBuysCardsController, type: :request do
   end
 
   describe "PUT update_balance" do
-    let(:number_points) { Faker::Number.number(2) }
+    let(:updated_balance) { Faker::Number.number(2).to_i }
 
     let(:request_params) do
       {
         private_api_key: private_api_key.value,
         card_number_or_email: valid_card_number_or_email,
-        number_points: number_points
+        updated_balance: updated_balance
       }
     end
 
@@ -144,8 +144,6 @@ RSpec.describe Api::V1::FlyBuysCardsController, type: :request do
         post(api_v1_member_login_path, params: request_params.merge(password: member_password))
         put(api_v1_card_update_balance_path, params: request_params)
       end
-
-      let!(:new_balance) { fly_buys_card.balance + number_points.to_i }
 
       it "is 200 ok" do
         expect(response.status).to eq(200)
@@ -156,7 +154,7 @@ RSpec.describe Api::V1::FlyBuysCardsController, type: :request do
       end
 
       it "correctly updates the card balance" do
-        expect(fly_buys_card.reload.balance).to eq(new_balance)
+        expect(fly_buys_card.reload.balance).to eq(updated_balance)
       end
     end
 

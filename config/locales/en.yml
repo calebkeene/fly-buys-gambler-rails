@@ -8,13 +8,18 @@ en:
       success: "Member signed in successfully"
       incorrect_password: "Error: incorrect password"
       already_logged_in: "Member already signed in"
+    logout:
+      success:
+        "Member signed out successfully"
     card_or_email:
       exists: "Found member corresponding to this card number or email"
       does_not_exist: "Cannot find member corresponding to this card number or email"
-      incorrect: "You have not entered a valid email or fly buys card number"
+      incorrect: "You have not entered a valid emapil or fly buys card number"
   fly_buys_card:
     format:
       valid: "Format is valid"
       invalid: "Format is invalid"
     balance:
-      update: "Missing key: number_points"
+      update:
+        missing_update_param: "Missing param: updated_balance"
+        success: "Card balance successfully updated"

@@ -1,6 +1,9 @@
-class ApplicationController < ActionController::API
+class ApplicationController < ActionController::Base
+  include ::ActionController::Cookies
   include Response
   include ExceptionHandler
+
+  skip_before_action :verify_authenticity_token
 
   def find_member
     raise MalformattedRequestError, I18n.t("member.card_or_email.incorrect") if invalid_card_number_or_email?
