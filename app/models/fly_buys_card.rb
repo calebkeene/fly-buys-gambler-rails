@@ -4,7 +4,7 @@ class FlyBuysCard < ApplicationRecord
   validates :number, :balance, presence: true
   validate :number_format
 
-  VALID_FORMAT = /(6014)-\d{4}-\d{4}-\d{4}/.freeze
+  VALID_FORMAT = /(6014)-?\d{4}-?\d{4}-?\d{4}/.freeze
 
   private
 

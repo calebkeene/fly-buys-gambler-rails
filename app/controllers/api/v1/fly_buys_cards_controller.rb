@@ -28,7 +28,7 @@ class Api::V1::FlyBuysCardsController < ApplicationController
     @member = find_member
     # member needs to be authed at this point - email cookie set
     if member&.email != cookies.signed[:logged_in_member_email]
-      #return # TODO: make sure cookie is sent from client
+      return # TODO: make sure cookie is sent from client
       raise UnauthorisedError, I18n.t("member.unauthorised.session_expired")
     end
   end
